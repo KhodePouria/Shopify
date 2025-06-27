@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Header } from "./components/header"; 
+
+import localFont from 'next/font/local';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,6 +14,23 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Add your custom font using next/font/local
+const myCustomFont = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Lexend.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Lexend.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-my-custom',
 });
 
 export const metadata: Metadata = {
@@ -24,9 +45,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        
+      </head>
+      
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${myCustomFont.variable} antialiased pt-[76px]`}
       >
+        <Header /> 
         {children}
       </body>
     </html>
