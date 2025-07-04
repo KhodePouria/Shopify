@@ -1,28 +1,34 @@
-import { prisma } from "@/lib/db";
+import { getProductBySlug, getProducts } from "@/lib/db";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-
-
-// Generate static parameters to avoid the dynamic API error
+// Generate static parameters for Static Site Generation (SSG)
 export async function generateStaticParams() {
-  const products = await prisma.product.findMany();
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
+  try {
+    const products = await getProducts();
+    return products.map((product) => ({
+      slug: product.slug,
+    }));
+  } catch (error) {
+    console.error("Error in generateStaticParams:", error);
+    return [];
+  }
 }
 
+// Define types for props according to Next.js App Router conventions
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 // Make sure to mark the component itself as async
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-    const {slug} = await params;
-    try {
-    // Convert params to regular variables
-       
-    const product = await prisma.product.findUnique({
-        where: {
-        slug: slug
-      },
-    });
+export default async function ProductPage({ params }: Props) {
+  try {
+    // Access slug directly from params
+    const { slug } = params;
+    
+    // Fetch the product data with fallback to mock data
+    const product = await getProductBySlug(slug);
 
     // Handle case where product is not found
     if (!product) {
