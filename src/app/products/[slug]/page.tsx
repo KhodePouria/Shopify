@@ -2,6 +2,8 @@ import { prisma } from "@/lib/db";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+type tParams = { slug: string };
+
 // Generate static parameters to avoid the dynamic API error
 export async function generateStaticParams() {
   const products = await prisma.product.findMany();
@@ -14,8 +16,7 @@ export async function generateStaticParams() {
 export default async function ProductPage({ params }: { params: { slug: string } }) {
   try {
     // Convert params to regular variables
-    const {slug} = await params;    
-    // Fetch the product data
+    const {slug}:{slug:string} = await params;    
     const product = await prisma.product.findUnique({
       where: {
         slug: slug
