@@ -18,7 +18,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     // Fetch the product data
     const product = await prisma.product.findUnique({
       where: {
-        slug: slug,
+        slug: slug
       },
     });
 
