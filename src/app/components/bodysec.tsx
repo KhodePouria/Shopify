@@ -48,7 +48,7 @@ export default function ProductShowcase() {
           {products.map((product) => (
             <div 
               key={product.id} 
-              className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col"
+              className=" bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-2 flex flex-col"
             >
               <div className="h-48 bg-gray-200 relative">
                 {/* Placeholder for product image */}
