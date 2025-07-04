@@ -3,11 +3,12 @@
 
 generator client {
   provider = "prisma-client-js"
+  // This ensures the Prisma client is generated during build time
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql" // or whatever provider you're using
   url      = env("DATABASE_URL")
 }
 
