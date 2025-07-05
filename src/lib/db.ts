@@ -1,5 +1,5 @@
 // filepath: /home/pouria/Desktop/Work/Next js/ToolPal/myproject/src/lib/db.ts
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient, Product } from '@/generated/prisma';
 
 // Mock data for fallback when database isn't available
 export const mockProducts = [
@@ -44,30 +44,42 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 // Fallback function to use mock data when database isn't available
-export const getProducts = async () => {
+export async function getProducts(): Promise<Product[]> {
   try {
+    // Check if DATABASE_URL is available
+    if (!process.env.DATABASE_URL) {
+      console.warn('DATABASE_URL not found, using mock data');
+      return mockProducts;
+    }
+    
     const products = await prisma.product.findMany();
-    return products.length > 0 ? products : mockProducts;
+    return products;
   } catch (error) {
-    console.warn('Database connection failed, using mock data instead');
+    console.error('Database connection failed, using mock data instead:', error);
     return mockProducts;
   }
-};
+}
 
-export const getProductBySlug = async (slug: string) => {
+export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
+    // Check if DATABASE_URL is available
+    if (!process.env.DATABASE_URL) {
+      console.warn('DATABASE_URL not found, using mock data');
+      return mockProducts.find(product => product.slug === slug) || null;
+    }
+    
     const product = await prisma.product.findUnique({
       where: { slug },
     });
     
-    if (product) return product;
+    if (!product) {
+      // Fallback to mock data if product not found in database
+      return mockProducts.find(p => p.slug === slug) || null;
+    }
     
-    // If not found in database, look in mock data
-    const mockProduct = mockProducts.find(p => p.slug === slug);
-    return mockProduct || null;
+    return product;
   } catch (error) {
-    console.warn('Database connection failed, using mock data instead');
-    const mockProduct = mockProducts.find(p => p.slug === slug);
-    return mockProduct || null;
+    console.error('Database connection failed, using mock data instead:', error);
+    return mockProducts.find(product => product.slug === slug) || null;
   }
-};
+}
