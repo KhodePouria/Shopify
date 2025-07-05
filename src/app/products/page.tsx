@@ -1,11 +1,10 @@
 import { Product } from "@/generated/prisma";
-import { getProducts } from "@/lib/db";
+import { prisma } from "@/lib/db";
 import Image from "next/image";
 import Link from "next/link";
 
-// Define a named function to resolve the ESLint display-name issue
-export default async function ProductsPage() {
-    const products = await getProducts();
+export default async function () {
+    const products = await prisma.product.findMany();
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">

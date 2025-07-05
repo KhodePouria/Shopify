@@ -16,16 +16,17 @@ export async function generateStaticParams() {
 }
 
 // Define types for props according to Next.js App Router conventions
-type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+
 
 // Make sure to mark the component itself as async
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
   try {
-    // Access slug directly from params
-    const { slug } = params;
+    // Await params before accessing its properties
+    const { slug } = await params;
     
     // Fetch the product data with fallback to mock data
     const product = await getProductBySlug(slug);
