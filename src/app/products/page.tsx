@@ -11,10 +11,9 @@ export default async function () {
             <div className="container mx-auto py-16 px-4 md:px-6">
                 <div className="mb-12 text-center">
                     <h1 className="text-5xl font-extrabold mb-4 text-gray-800 relative inline-block">
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                        <span className="text-black font-semibold">
                             Premium Products
                         </span>
-                        <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto text-lg">Discover our collection of high-quality tools designed for professionals</p>
                 </div>
@@ -46,7 +45,7 @@ export default async function () {
                                 
                                 {/* Price tag */}
                                 <div className="absolute top-4 right-4 z-10">
-                                    <div className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
+                                    <div className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
                                         ${product.price}
                                     </div>
                                 </div>
@@ -86,7 +85,7 @@ export default async function () {
                                 <div className="flex space-x-2 mb-4">
                                     <div className="w-5 h-5 rounded-full bg-red-500 ring-2 ring-white"></div>
                                     <div className="w-5 h-5 rounded-full bg-blue-500 ring-2 ring-white"></div>
-                                    <div className="w-5 h-5 rounded-full bg-green-500 ring-2 ring-white"></div>
+                                    <div className="w-5 h-5 rounded-full bg-purple-500 ring-2 ring-white"></div>
                                 </div>
                                 
                                 <div className="mt-auto">

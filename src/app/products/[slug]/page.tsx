@@ -53,7 +53,7 @@ export default async function ProductPage({
             <div className="p-8 md:w-1/2">
               <div className="flex justify-between items-start">
                 <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.title}</h1>
-                <span className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg">
+                <span className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">
                   ${product.price}
                 </span>
               </div>
@@ -76,7 +76,7 @@ export default async function ProductPage({
                 <div className="flex space-x-3">
                   <div className="w-8 h-8 rounded-full bg-blue-600 ring-2 ring-white cursor-pointer"></div>
                   <div className="w-8 h-8 rounded-full bg-purple-600 ring-2 ring-white cursor-pointer"></div>
-                  <div className="w-8 h-8 rounded-full bg-emerald-500 ring-2 ring-white cursor-pointer"></div>
+                  <div className="w-8 h-8 rounded-full bg-gray-600 ring-2 ring-white cursor-pointer"></div>
                 </div>
               </div>
               

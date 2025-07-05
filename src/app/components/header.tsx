@@ -74,7 +74,7 @@ export function Header() {
           <Link href="/products" className={`text-black hover:text-gray-400 transition-all duration-100 ease-in-out ${pathname === "/products" ? "underline" : ""}`} onClick={() => setMenuOpen(false)}>Products</Link>
           <Link href="/about" className={`text-black hover:text-gray-400 transition-all duration-100 ease-in-out ${pathname === "/about" ? "underline" : ""}`} onClick={() => setMenuOpen(false)}>About</Link>
         </nav>
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 mt-8">
           <button className="text-black hover:text-gray-400 cursor-pointer transition-all duration-100 ease-in-out">Sign Up</button>
           <button className="px-4 py-2 bg-blue-500 text-white rounded-3xl hover:bg-blue-100 cursor-pointer transition-all duration-300 ease-in-out">Log In</button>
         </div>
