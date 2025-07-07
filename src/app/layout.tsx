@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "./components/header"; 
 import { Footer } from "./components/footer";
+import SessionWrapper from "./components/SessionWrapper";
+import { SessionProvider } from "next-auth/react";
 
 import localFont from 'next/font/local';
 
@@ -50,9 +52,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${myCustomFont.variable} antialiased pt-[76px]`}
       >
-        <Header /> 
-        {children}
-        <Footer />
+        <SessionWrapper>
+          <Header /> 
+          <main className="pt-16">
+            {children}
+          </main>
+          <Footer />
+        </SessionWrapper>
       </body>
     </html>
   );

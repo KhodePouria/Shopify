@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: session, status } = useSession();
 
   // Add scroll event listener
   useEffect(() => {
@@ -23,6 +25,83 @@ export function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
+
+  const handleLogout = async () => {
+    await signOut({ 
+      callbackUrl: "/",
+      redirect: true 
+    });
+  };
+
+  const AuthButtons = () => {
+    if (status === "loading") {
+      return <div className="text-gray-500">Loading...</div>;
+    }
+
+    if (session) {
+      return (
+        <div className="flex items-center gap-4">
+          <span className="text-gray-700">Welcome, {session.user?.name}</span>
+          <button 
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded-3xl hover:bg-red-600 cursor-pointer transition-all duration-300 ease-in-out"
+          >
+            Log Out
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <Link href="/signup">
+          <button className="text-black hover:text-gray-400 cursor-pointer transition-all duration-100 ease-in-out">
+            Sign Up
+          </button>
+        </Link>
+        <Link href="/login">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-3xl hover:bg-blue-400 cursor-pointer transition-all duration-300 ease-in-out">
+            Log In
+          </button>
+        </Link>
+      </>
+    );
+  };
+
+  const MobileAuthButtons = () => {
+    if (status === "loading") {
+      return <div className="text-gray-500">Loading...</div>;
+    }
+
+    if (session) {
+      return (
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-gray-700">Welcome, {session.user?.name}</span>
+          <button 
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded-3xl hover:bg-red-600 cursor-pointer transition-all duration-300 ease-in-out"
+          >
+            Log Out
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <Link href="/signup">
+          <button className="text-black hover:text-gray-400 cursor-pointer transition-all duration-100 ease-in-out">
+            Sign Up
+          </button>
+        </Link>
+        <Link href="/login">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-3xl hover:bg-blue-100 cursor-pointer transition-all duration-300 ease-in-out">
+            Log In
+          </button>
+        </Link>
+      </>
+    );
+  };
 
   return (
     <div className={`flex w-full items-center justify-between p-4 bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -42,8 +121,7 @@ export function Header() {
 
       {/* Buttons (Right Section) - Desktop */}
       <div className="hidden md:flex flex-1 justify-end items-center gap-4">
-        <button className="text-black hover:text-gray-400 cursor-pointer transition-all duration-100 ease-in-out">Sign Up</button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-3xl hover:bg-blue-400 cursor-pointer transition-all duration-300 ease-in-out">Log In</button>
+        <AuthButtons />
       </div>
 
       {/* Hamburger Icon - Mobile with Animation */}
@@ -75,8 +153,7 @@ export function Header() {
           <Link href="/about" className={`text-black hover:text-gray-400 transition-all duration-100 ease-in-out ${pathname === "/about" ? "underline" : ""}`} onClick={() => setMenuOpen(false)}>About</Link>
         </nav>
         <div className="flex flex-col items-center gap-2 mt-8">
-          <button className="text-black hover:text-gray-400 cursor-pointer transition-all duration-100 ease-in-out">Sign Up</button>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-3xl hover:bg-blue-100 cursor-pointer transition-all duration-300 ease-in-out">Log In</button>
+          <MobileAuthButtons />
         </div>
       </div>
     </div>
