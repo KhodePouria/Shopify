@@ -81,7 +81,7 @@ export function Footer() {
                 <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                <span>support@toolpal.com</span>
+                <span>pouriaramezani2002@gmail.com</span>
               </li>
               <li className="flex items-center">
                 <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +126,7 @@ export function Footer() {
       <div className="bg-gray-950 py-4">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
           <div className="text-sm text-gray-500">
-            © {currentYear} ToolPal. All rights reserved.
+            © {currentYear} PouriaX. All rights reserved.
           </div>
           <div className="mt-4 md:mt-0 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <Link href="/privacy" className="hover:text-gray-400 transition-colors duration-300">Privacy Policy</Link>
