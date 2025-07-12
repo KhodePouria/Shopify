@@ -1,3 +1,4 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +13,6 @@ export default async function ProductsPage() {
   const smartphonesData = await smartphones.json();
   const tabletsData = await tablets.json();
 
-  // Access the `products` field from both responses
   const allproducts = [...smartphonesData.products, ...laptopsData.products, ...tabletsData.products];
 
   type Product = {

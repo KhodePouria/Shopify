@@ -1,44 +1,41 @@
 // filepath: /home/pouria/Desktop/Work/Next js/ToolPal/myproject/src/lib/db.ts
 import { PrismaClient, Product } from '@/generated/prisma';
 
+
 // Mock data for fallback when database isn't available
 export const mockProducts = [
   {
-    id: '1',
+    id: 1,
     title: 'Professional Drill Set',
     slug: 'professional-drill-set',
-    content: 'A high-quality professional drill set with various attachments for all your drilling needs.',
+    description: 'A high-quality professional drill set with various attachments for all your drilling needs.',
     price: 199,
-    picture: '/images/drill-set.jpg',
+    images: '/images/drill-set.jpg',
   },
   {
-    id: '2',
+    id: 2,
     title: 'Electric Screwdriver',
     slug: 'electric-screwdriver',
-    content: 'Powerful electric screwdriver with adjustable torque settings and LED work light.',
+    description: 'Powerful electric screwdriver with adjustable torque settings and LED work light.',
     price: 79,
-    picture: '/images/screwdriver.jpg',
+    images: '/images/screwdriver.jpg',
   },
   {
-    id: '3',
+    id: 3,
     title: 'Professional Toolbox',
     slug: 'professional-toolbox',
-    content: 'Durable toolbox with multiple compartments for organizing all your tools.',
+    description: 'Durable toolbox with multiple compartments for organizing all your tools.',
     price: 129,
-    picture: '/images/toolbox.jpg',
+    images: '/images/toolbox.jpg',
   },
 ];
-
-// PrismaClient is attached to the `global` object in development to prevent
-// exhausting your database connection limit.
-// Learn more: https://pris.ly/d/help/next-js-best-practices
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    log: ['query', 'error', 'warn'],
+    log: ['error', 'warn'],
   });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

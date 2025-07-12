@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import React ,{ useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { logingit,logingoogle } from "@/lib/actions/auth";
-
+import {prisma} from "@/lib/db" 
 
 
 
@@ -12,6 +12,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -22,7 +23,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
+    
     console.log("Login:", formData);
   };
 

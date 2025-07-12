@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { AddUser } from "@/actions/actions";
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -11,19 +12,46 @@ export default function SignUpPage() {
     password: "",
     confirmPassword: "",
   });
+  
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value
     });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  }
+  
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Handle sign up logic here
-    console.log("Sign up:", formData);
-  };
+    setError(null);
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    
+    try {
+      const formDataObj = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataObj.append(key, value);
+      });
+      
+      const result = await AddUser(formDataObj);
+      if (result.success) {
+        setSuccess(true);
+        // Optionally redirect or clear form
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -51,8 +79,21 @@ export default function SignUpPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-light text-gray-900 mb-2">Create account</h1>
-            <p className="text-gray-600">Join us today</p>
           </div>
+          
+          {/* Error message */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
+          
+          {/* Success message */}
+          {success && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+              Account created successfully! <Link href="/login" className="underline">Log in now</Link>
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
