@@ -29,22 +29,30 @@ export const mockProducts = [
   },
 ];
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+let prismaInstance: PrismaClient | null = null;
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: ['error', 'warn'],
-  });
+function getPrismaClient() {
+  if (!process.env.DATABASE_URL) {
+    console.warn('DATABASE_URL not found, database operations will use fallback data');
+    return null;
+  }
+  
+  if (!prismaInstance) {
+    prismaInstance = new PrismaClient({
+      log: ['error', 'warn'],
+    });
+  }
+  
+  return prismaInstance;
+}
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+export const prisma = getPrismaClient();
 
 // Fallback function to use mock data when database isn't available
 export async function getProducts() {
   try {
-    // Check if DATABASE_URL is available
-    if (!process.env.DATABASE_URL) {
-      console.warn('DATABASE_URL not found, using mock data');
+    if (!prisma) {
+      console.warn('Database not available, using mock data');
       return mockProducts;
     }
     
@@ -58,9 +66,8 @@ export async function getProducts() {
 
 export async function getProductBySlug(slug: string) {
   try {
-    // Check if DATABASE_URL is available
-    if (!process.env.DATABASE_URL) {
-      console.warn('DATABASE_URL not found, using mock data');
+    if (!prisma) {
+      console.warn('Database not available, using mock data');
       return mockProducts.find(product => product.slug === slug) || null;
     }
     

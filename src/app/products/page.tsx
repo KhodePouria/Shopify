@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { getProducts } from "@/lib/db";
 
 export default async function ProductsPage() {
-  const products = await prisma.product.findMany();
+  const products = await getProducts();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
