@@ -54,3 +54,12 @@ export async function AddUser(formData: FormData) {
   }
 }
 
+export async function authorization(formData: FormData){
+  const email = formData.get("email");
+  const password = formData.get("password")
+
+  if(!password || !email){
+    throw new Error("Missing reqiered fields");
+  }
+  
+}

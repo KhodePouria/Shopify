@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
 
-
 const prisma = new PrismaClient();
 
 async function main() {
@@ -28,7 +27,9 @@ async function main() {
         title: product.title,
         description: product.description,
         price: product.price,
-        images: product.images,
+        images: Array.isArray(product.images)
+          ? JSON.stringify(product.images)
+          : product.images,
         slug: product.title.toLowerCase().replace(/ /g, "-"), // Generate a slug
       },
     });

@@ -1,40 +1,46 @@
-import { getProductBySlug, getProducts } from "@/lib/db";
+import { prisma } from "@/lib/db";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import Link from "next/link";
 
-// Generate static parameters for Static Site Generation (SSG)
-export async function generateStaticParams() {
+export default async function ProductDetail({
+  params,
+}: any) {
   try {
-    const products = await getProducts();
-    return products.map((product) => ({
-      slug: product.slug,
-    }));
-  } catch (error) {
-    console.error("Error in generateStaticParams:", error);
-    return [];
-  }
-}
-
-// Define types for props according to Next.js App Router conventions
-
-
-// Make sure to mark the component itself as async
-export default async function ProductPage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
-}) {
-  try {
-    // Await params before accessing its properties
-    const { slug } = await params;
+    const slug = String(params.slug);
     
-    // Fetch the product data with fallback to mock data
-    const product = await getProductBySlug(slug);
+    const product = await prisma.product.findUnique({
+      where: { slug },
+    });
 
-    // Handle case where product is not found
     if (!product) {
-      return notFound();
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">Product Not Found</h1>
+            <p className="text-gray-600 mb-6">The product you are looking for does not exist.</p>
+            <Link href="/products">
+              <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                Back to Products
+              </button>
+            </Link>
+          </div>
+        </div>
+      );
     }
+
+    // Need to handle images properly since it's stored as a string in the database
+    let productImages;
+    try {
+      // Try to parse it as JSON if it's a string containing an array
+      productImages = JSON.parse(product.images);
+    } catch (e) {
+      // If it's not valid JSON, use it as a single image string
+      productImages = [product.images];
+    }
+
+    const imageUrl = Array.isArray(productImages) && productImages.length > 0 
+      ? productImages[0] 
+      : "/default-image.jpg";
 
     return (
       <div className="container mx-auto py-10 px-4">
@@ -43,7 +49,7 @@ export default async function ProductPage({
             <div className="md:w-1/2">
               <div className="relative h-72 md:h-full">
                 <Image 
-                  src={product.picture ?? "/default-image.jpg"} 
+                  src={imageUrl} 
                   alt={product.title}
                   fill
                   className="object-cover"
@@ -69,7 +75,7 @@ export default async function ProductPage({
                 <span className="text-sm text-gray-500 ml-2">(45 reviews)</span>
               </div>
               
-              <p className="text-gray-600 mb-8 leading-relaxed">{product.content}</p>
+              <p className="text-gray-600 mb-8 leading-relaxed">{product.description}</p>
               
               <div className="mb-6">
                 <h3 className="text-gray-700 font-semibold mb-2">Available Colors</h3>

@@ -41,7 +41,6 @@ export function Header() {
     if (session) {
       return (
         <div className="flex items-center gap-4">
-          {session.user?.image && <Image className="rounded-4xl shadow-2xl" src={session.user.image} alt="user-image" width="42" height="42"></Image>}
           <span className="text-gray-700">Welcome, {session.user?.name}</span>
           <button 
             onClick={handleLogout}
