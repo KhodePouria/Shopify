@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { getProductById } from "@/lib/db";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,11 +6,9 @@ export default async function ProductDetail({
   params,
 }: any) {
   try {
-    const slug = String(params.slug);
+    const slug = parseInt(params.slug);
     
-    const product = await prisma.product.findUnique({
-      where: { slug },
-    });
+    const product = await getProductById(slug);
 
     if (!product) {
       return (

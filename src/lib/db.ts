@@ -64,6 +64,28 @@ export async function getProducts() {
   }
 }
 
+export async function getProductById(id: number){
+  try{
+    if (!prisma){
+      console.warn('Database not available, using mock data');
+      return mockProducts.find(product => product.id === id) || null;
+    }
+    const product = await prisma.product.findUnique(
+      {
+        where: {id},
+      }
+    );
+    if (!product){
+      return mockProducts.find(p => p.id === id) || null;
+    }
+    return product;
+  }
+  catch(e){
+    console.error('Database connection failed, using mock data instead:', e);
+    return mockProducts.find(p => p.id === id);
+  }
+}
+
 export async function getProductBySlug(slug: string) {
   try {
     if (!prisma) {
