@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/lib/db";
+import { prisma,mockProducts } from "@/lib/db";
 
 export async function AddUser(formData: FormData) {
   try {
@@ -25,6 +25,15 @@ export async function AddUser(formData: FormData) {
     }
 
     console.log("Checking if user exists...");
+    
+    
+    if (!prisma){
+      throw new Error('Database not found!')
+      }
+      
+    
+    
+
     const existingUser = await prisma.users.findUnique({
       where: { 
         email: email.toString(),
