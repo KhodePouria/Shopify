@@ -1,6 +1,5 @@
 // filepath: /home/pouria/Desktop/Work/Next js/ToolPal/myproject/src/lib/db.ts
-import { PrismaClient, Product } from '@/generated/prisma';
-
+import { PrismaClient } from '@prisma/client';
 
 // Mock data for fallback when database isn't available
 export const mockProducts = [
@@ -41,7 +40,7 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 // Fallback function to use mock data when database isn't available
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts() {
   try {
     // Check if DATABASE_URL is available
     if (!process.env.DATABASE_URL) {
@@ -57,7 +56,7 @@ export async function getProducts(): Promise<Product[]> {
   }
 }
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
+export async function getProductBySlug(slug: string) {
   try {
     // Check if DATABASE_URL is available
     if (!process.env.DATABASE_URL) {
