@@ -1,4 +1,4 @@
-import { getProductById } from "@/lib/db";
+import { getProductBySlug } from "@/lib/db";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,9 +6,9 @@ export default async function ProductDetail({
   params,
 }: any) {
   try {
-    const slug = parseInt(params.slug);
+    const slug = String((params as any).slug);
     
-    const product = await getProductById(slug);
+    const product = await getProductBySlug(slug);
 
     if (!product) {
       return (
