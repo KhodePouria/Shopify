@@ -1,4 +1,5 @@
 import Image from "next/image";
+import React from "react";
 import First from "./components/bodyfirst";
 import ProductShowcase from "./components/bodysec";
 import Testimonials from "./components/bodythird";
@@ -7,7 +8,7 @@ import FeatureSection from "./components/bodyforth";
 export default function Home() {
   return (
     <main>
-      <First />
+      <First/>
       <ProductShowcase />
       <Testimonials />
       <FeatureSection />

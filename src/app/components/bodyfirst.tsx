@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 export default function First(){
     return(
-        <div className="relative min-h-screen overflow-hidden">
+        <div data-testid="cypress-first" className="relative min-h-screen overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <Image 
@@ -22,30 +22,27 @@ export default function First(){
             <div className="relative z-10 flex items-center min-h-screen px-4 md:px-20">
                 <div className="max-w-2xl">
                     <div className="mb-8">
-                        <h1 className="text-white mb-2 text-5xl md:text-7xl font-bold leading-tight">
+                        <h1 className="mb-2 text-5xl font-bold leading-tight text-white md:text-7xl">
                             Tech Deals,
                         </h1>
-                        <h2 className="text-blue-400 mb-6 text-6xl md:text-8xl font-bold leading-none">
+                        <h2 className="mb-6 text-6xl font-bold leading-none text-blue-400 md:text-8xl">
                             Fast!
                         </h2>
                     </div>
                     
-                    <p className="text-gray-200 text-xl md:text-2xl mb-12 leading-relaxed max-w-xl">
+                    <p className="max-w-xl mb-12 text-xl leading-relaxed text-gray-200 md:text-2xl">
                         Welcome to your one-stop shop for the latest phones, laptops, and must-have tech—where quality meets unbeatable prices.
                     </p>
                     
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <button className="group relative px-8 py-4 text-lg md:text-xl font-semibold text-white 
-                        bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div className="flex flex-col gap-4 sm:flex-row">
+                        <button className="relative px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform bg-blue-600 group md:text-xl hover:bg-blue-700 rounded-xl hover:scale-105 hover:shadow-2xl">
                             <Link href="./products">
                             <span className="relative z-10">Shop Now</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 
-                            group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                            <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:opacity-100 rounded-xl"></div>
                             </Link>
                         </button>
                         
-                        <button className="px-8 py-4 text-lg md:text-xl font-semibold text-white border-2 border-white/30 
-                        rounded-xl backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+                        <button className="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 border-2 md:text-xl border-white/30 rounded-xl backdrop-blur-sm hover:bg-white/10">
                             <Link href="./about">
                             Learn More
                             </Link>
@@ -56,24 +53,24 @@ export default function First(){
                     <div className="flex flex-wrap gap-6 mt-16">
                         <div className="text-center">
                             <div className="text-3xl font-bold text-blue-400">1000+</div>
-                            <div className="text-gray-300 text-sm">Products</div>
+                            <div className="text-sm text-gray-300">Products</div>
                         </div>
                         <div className="text-center">
                             <div className="text-3xl font-bold text-blue-400">24/7</div>
-                            <div className="text-gray-300 text-sm">Support</div>
+                            <div className="text-sm text-gray-300">Support</div>
                         </div>
                         <div className="text-center">
                             <div className="text-3xl font-bold text-blue-400">Fast</div>
-                            <div className="text-gray-300 text-sm">Delivery</div>
+                            <div className="text-sm text-gray-300">Delivery</div>
                         </div>
                     </div>
                 </div>
             </div>
             
             {/* Floating Elements for Extra Coolness */}
-            <div className="absolute top-20 right-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
-            <div className="absolute bottom-32 right-20 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-cyan-500/20 rounded-full blur-lg animate-pulse delay-500"></div>
+            <div className="absolute w-20 h-20 rounded-full top-20 right-10 bg-blue-500/20 blur-xl animate-pulse"></div>
+            <div className="absolute w-32 h-32 delay-1000 rounded-full bottom-32 right-20 bg-purple-500/20 blur-2xl animate-pulse"></div>
+            <div className="absolute w-16 h-16 delay-500 rounded-full top-1/2 right-1/4 bg-cyan-500/20 blur-lg animate-pulse"></div>
         </div>
     );
 }

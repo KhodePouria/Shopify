@@ -32,7 +32,8 @@
   "include": [
     "prisma/**/*.ts",
     "src/**/*.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "cypress"
   ],
   "exclude": [
     "node_modules"

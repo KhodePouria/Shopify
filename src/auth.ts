@@ -3,5 +3,33 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 export const {auth, handlers, signIn, signOut} = NextAuth({
-    providers:[GitHub,Google],
-})
+    providers:[
+        GitHub({
+            clientId: process.env.AUTH_GITHUB_ID,
+            clientSecret: process.env.AUTH_GITHUB_SECRET,
+        }),
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code"
+                }
+            }
+        })
+    ],
+    debug: process.env.NODE_ENV === "development",
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            return true;
+        },
+        async session({ session, token }) {
+            return session;
+        },
+        async jwt({ token, user, account, profile }) {
+            return token;
+        }
+    }
+});
