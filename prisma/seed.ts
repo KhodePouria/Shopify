@@ -1,14 +1,14 @@
-const { PrismaClient } = require("@prisma/client");
+const {PrismaClient} = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Seeding database...");
+  console.log('Seeding database...');
 
   const [laptops, smartphones, tablets] = await Promise.all([
-    fetch("https://dummyjson.com/products/category/laptops"),
-    fetch("https://dummyjson.com/products/category/smartphones"),
-    fetch("https://dummyjson.com/products/category/tablets"),
+    fetch('https://dummyjson.com/products/category/laptops'),
+    fetch('https://dummyjson.com/products/category/smartphones'),
+    fetch('https://dummyjson.com/products/category/tablets'),
   ]);
 
   const laptopsData = await laptops.json();
@@ -30,12 +30,12 @@ async function main() {
         images: Array.isArray(product.images)
           ? JSON.stringify(product.images)
           : product.images,
-        slug: product.title.toLowerCase().replace(/ /g, "-"), // Generate a slug
+        slug: product.title.toLowerCase().replace(/ /g, '-'),
       },
     });
   }
 
-  console.log("Seeding completed!");
+  console.log('Seeding completed!');
 }
 
 main()

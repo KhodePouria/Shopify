@@ -6,7 +6,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   // Add this to ensure Prisma can work with the webpack setup
-  webpack: (config, { isServer }) => {
+  webpack: (config, {isServer}) => {
     if (isServer) {
       // Fix for Prisma client on Vercel deployments
       config.externals = [...config.externals, '@prisma/client', 'prisma'];
@@ -15,12 +15,13 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "avatars.githubusercontent.com",
-      "lh3.googleusercontent.com",
-      "dummyjson.com",
-      "cdn.dummyjson.com", // Add this domain
+      'localhost',
+      'avatars.githubusercontent.com',
+      'lh3.googleusercontent.com',
+      'dummyjson.com',
+      'cdn.dummyjson.com', // Add this domain
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
